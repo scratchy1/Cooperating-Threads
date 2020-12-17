@@ -1,0 +1,28 @@
+class Kartonabtransportprozess extends Thread {
+private Signale signale;
+public Kartonabtransportprozess(Signale signale) {
+this.signale = signale;
+}
+private void fahreKartonWeg() throws InterruptedException {
+sleep(250); // Zeit, in der der Karton von der
+// Ablageposition weggefahren wird.
+}
+private void fahreKartonVonAblageposWeg() throws InterruptedException {
+signale.WarteProduktAbgelegt();
+System.out.println("-3- Karton wird weggefahren");
+fahreKartonWeg();
+signale.setProduktAbgelegt(false);
+signale.setAblageposFrei(true);
+}
+public void run() {
+while (true) {
+try {
+fahreKartonVonAblageposWeg();
+}
+catch (InterruptedException e) {
+System.out.println("Unzulaessige Unterbrechung");
+System.exit(0);
+}
+}
+}
+}
